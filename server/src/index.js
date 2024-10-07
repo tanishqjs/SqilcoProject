@@ -1,16 +1,18 @@
-const express = require('express')
-const mongoose = require('mongoose')
+const express = require('express');
+const mongoose = require('mongoose');
+const router = require('./Routes/routers.js');
 require('dotenv').config()
 
 
+const app = express();
+app.use(express.json())
 
-const app = express()
-
-const port = 5000 || process.env.PORT
-
+const port = 5000;
 
 mongoose.connect(process.env.MongoDB)
-    .then(() => { console.log('MongoDB Connected') })
-    .catch((e) => { console.log(e) })
+    .then(() => { console.log('Server Successfully Connected') })
+    .catch((err) => { console.log(err) })
 
-app.listen(port,()=>{console.log(`Server is Running ${port}`)})
+app.use('/', router)
+
+app.listen(port, () => { console.log(`Server is Running port - ${port}`) })
